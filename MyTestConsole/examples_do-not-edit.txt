@@ -1,0 +1,96 @@
+ULCLI - Mediatechnics Fusion/MF-Digital Big Ripper - banks=1, shake=no
+
+Load:
+--comport=COM1 --comspeed=38400 --open --command=C:X:::E --command=I:X:::E --close --ondiscnotreadyskip=3 --unbindtodrive --sleep=1 --exit --rejectsmax=10 --rejectsiterate --open --command=G:X:::E --close --command=R:X:::E
+
+Unload:
+--comport=COM1 --comspeed=38400 --command=C:X:::E --bindtodrive --open --command=A:X:::E --close
+
+Reject:
+--comport=COM1 --comspeed=38400 --rejectsmax=10 --rejectsiterate --bindtodrive --command=C:X:::E --open --command=G:X:::E --close --command=R:X:::E
+
+Pre-Batch:
+--comport=COM1 --comspeed=38400 --rejectsreset --close --command=V --sleep=1 --command=C:X:::E --command=F:X:::E --bindtodrive --sleeprandom=2
+
+Post-Batch:
+--comport=COM1 --comspeed=38400 --command=C:X:::E --bindresetall --close
+
+
+-----------------
+
+ULCLI - Mediatechnics Fusion/MF-Digital Big Ripper - banks=1, shake=yes
+
+Load:
+--comport=COM1 --comspeed=38400 --open --command=C:X:::E --command=j:X:::E --close --ondiscnotreadyskip=3 --unbindtodrive --sleep=1 --exit --rejectsmax=10 --rejectsiterate --open --command=G:X:::E --close --command=R:X:::E
+
+Unload:
+--comport=COM1 --comspeed=38400 --command=C:X:::E --bindtodrive --open --command=A:X:::E --close
+
+Reject:
+--comport=COM1 --comspeed=38400 --rejectsmax=10 --rejectsiterate --bindtodrive --command=C:X:::E --open --command=G:X:::E --close --command=R:X:::E
+
+Pre-Batch:
+--comport=COM1 --comspeed=38400 --rejectsreset --close --command=V --sleep=1 --command=C:X:::E --command=F:X:::E --bindtodrive --sleeprandom=2
+
+Post-Batch:
+--comport=COM1 --comspeed=38400 --command=C:X:::E --bindresetall --close
+
+
+-----------------
+
+ULCLI - Mediatechnics Fusion/MF-Digital Big Ripper - banks=2, shake=no
+
+Load:
+--drivebank=1 --comport=COM1 --comspeed=38400 --open --command=C:X:::E --command=P:X:::E --commandbank1=I:X:::E --commandbank2=K:X:::E --close --ondiscnotreadyskip=3 --unbindtodrive --sleep=1 --exit --rejectsmax=10 --rejectsiterate --open --commandbank1=G:X:::E --commandbank2=H:X:::E --close --command=R:X:::E
+
+Unload:
+--drivebank=1 --comport=COM1 --comspeed=38400 --command=C:X:::E --bindtodrive --open --commandbank1=A:X:::E --commandbank2=B:X:::E --close
+
+Reject:
+--drivebank=1 --comport=COM1 --comspeed=38400 --rejectsmax=10 --rejectsiterate --bindtodrive --command=C:X:::E --open --commandbank1=G:X:::E --commandbank2=H:X:::E --close --command=R:X:::E
+
+Pre-Batch:
+--drivebank=1 --comport=COM1 --comspeed=38400 --rejectsreset --close --command=V --sleep=1 --command=C:X:::E --command=F:X:::E --bindtodrive --sleeprandom=2
+
+Post-Batch:
+--drivebank=1 --comport=COM1 --comspeed=38400 --command=C:X:::E --bindresetall --close
+
+
+-----------------
+
+ULCLI - Amtren or Discmakers Elite Pro - banks=1
+
+Load:
+--comport=COM1 --comspeed=9600 --open --command=C:X:::E --command=I:X:::E --close --ondiscnotreadyskip=3 --unbindtodrive --sleep=1 --exit --rejectsmax=10 --rejectsiterate --open --command=G:X:::E --close --command=R:X:::E
+
+Unload:
+--comport=COM1 --comspeed=9600 --command=C:X:::E --bindtodrive --open --command=A:X:::E --close
+
+Reject:
+--comport=COM1 --comspeed=9600 --rejectsmax=10 --rejectsiterate --bindtodrive --command=C:X:::E --open --command=G:X:::E --close --command=R:X:::E
+
+Pre-Batch:
+--comport=COM1 --comspeed=9600 --rejectsreset --close --command=V --sleep=1 --command=C:X:::E --bindtodrive --sleeprandom=2
+
+Post-Batch:
+--comport=COM1 --comspeed=9600 --command=C:X:::E --bindresetall --close
+
+-----------------
+
+ULCLI - Primera Composer - banks=2: for "Pro", use --drivebank=# (1=Right, 2=Left)
+
+Load:
+--drivebank=1 --comport=COM1 --comspeed=14400 --pollstring=SI\M --command=__SRESET::10:5 --open --commandbank1=MIR\M:SIMIR.:30:10 --commandbank2=MIr\M:SIMIr.:30:10 --close --ondiscnotreadyskip=3 --unbindtodrive --sleep=1 --exit --rejectsmax=10 --rejectsiterate --open --commandbank1=MRJ\M:SIMRJ.:30:10 --commandbank2=MrJ\M:SIMrJ.:30:10
+
+Post-Batch:
+--drivebank=1 --comport=COM1 --comspeed=14400 --pollstring=SI\M --bindresetall --command=__SRESET::10:5 --close
+
+Pre-Batch:
+--drivebank=1 --comport=COM1 --comspeed=14400 --rejectsreset --close --pollstring=SI\M --command=SV\M::5:2 --sleep=1 --command=__SRESET::10:5 --bindtodrive --sleeprandom=2
+
+Reject:
+--drivebank=1 --comport=COM1 --comspeed=14400 --rejectsmax=10 --rejectsiterate --bindtodrive --pollstring=SI\M --command=__SRESET::10:5 --open --commandbank1=MRJ\M:SIMRJ.:30:10 --commandbank2=MrJ\M:SIMrJ.:30:10
+
+Unload:
+--drivebank=1 --comport=COM1 --comspeed=14400 --pollstring=SI\M --command=__SRESET::10:5 --open --commandbank1=MRO\M:SIMRO.:30:10 --commandbank2=MrO\M:SIMrO.:30:10 --close
+
