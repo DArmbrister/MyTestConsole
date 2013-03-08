@@ -13,25 +13,34 @@ namespace MyTestConsole.Utilities
 
         public void GetInputCD(string Arguments)
         {
-            var proc = new Process();
-            proc.StartInfo.FileName = "ULCLI.exe";
-            proc.StartInfo.Arguments = Arguments + " --open --command=I --close";
-            proc.Start();
-            proc.WaitForExit();
-            var exitCode = proc.ExitCode;
-            proc.Close();
+            String[] commandArray = new String[] {" --open"," --command=I"," --close"};
+            foreach (string command in commandArray)
+            {
+                var proc = new Process();
+                proc.StartInfo.FileName = "ULCLI.exe";
+                proc.StartInfo.Arguments = Arguments + command;
+                proc.Start();
+                proc.WaitForExit();
+                var exitCode = proc.ExitCode;
+                proc.Close();
+            }
             System.Threading.Thread.Sleep(15000);
         }
 
         public void DipositOutputCD(string Arguments)
         {
-            var proc = new Process();
-            proc.StartInfo.FileName = "ULCLI.exe";
-            proc.StartInfo.Arguments = Arguments + " --open --command=G --close --command=A";
-            proc.Start();
-            proc.WaitForExit();
-            var exitCode = proc.ExitCode;
-            proc.Close();
+            String[] commandArray = new String[] { 
+                " --open", " --command=G", " --close", " --command=A" };
+            foreach (string command in commandArray)
+            {
+                var proc = new Process();
+                proc.StartInfo.FileName = "ULCLI.exe";
+                proc.StartInfo.Arguments = Arguments + command;
+                proc.Start();
+                proc.WaitForExit();
+                var exitCode = proc.ExitCode;
+                proc.Close();
+            }
         }
 
         public string GetDriveStatus()
