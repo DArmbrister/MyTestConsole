@@ -50,28 +50,53 @@ namespace MyTestConsole.Utilities
             return null;
         }
 
-        public void CopyCdContent(string baseFilePath, string CdNumber)
+        public void CopyCdContent(string baseFilePath, string CdNumber,StreamWriter logFile)
         {
+            string originalFilePath = null;
             var filePath = Path.Combine(baseFilePath, CdNumber+"\\");
             var yay = System.IO.DriveInfo.GetDrives();
             var driveDirectory = GetDriveStatus();
-            if (!Directory.Exists(filePath))
+            if (driveDirectory != null)
             {
-                Directory.CreateDirectory(filePath);
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                }
+                try
+                {
+                    foreach (string dirPath in System.IO.Directory.EnumerateDirectories(
+                        driveDirectory, "*", System.IO.SearchOption.AllDirectories))
+                    {
+                        Directory.CreateDirectory(dirPath.Replace(driveDirectory, filePath));
+                    }
+                    foreach (string newPath in Directory.GetFiles(
+                        driveDirectory, "*", SearchOption.AllDirectories))
+                    {
+                        originalFilePath = newPath;
+                        File.Copy(newPath, newPath.Replace(driveDirectory, filePath), true);
+                    }
+                    Console.WriteLine("CD Number " + CdNumber.ToString() + " is done copying");
+                    logFile.WriteLine(DateTime.Now);
+                    logFile.WriteLine("Succesful copy of CD " + CdNumber.ToString());
+                    logFile.WriteLine();
+                }
+                catch
+                {
+                    Console.WriteLine("Error during copy of " + CdNumber + " " + originalFilePath);
+                    logFile.WriteLine(DateTime.Now);
+                    logFile.WriteLine("Error during copy of " + CdNumber + " " + originalFilePath);
+                    logFile.WriteLine();
+                }
             }
-            foreach (string dirPath in System.IO.Directory.EnumerateDirectories(
-                driveDirectory, "*", System.IO.SearchOption.AllDirectories))
+            else
             {
-                Directory.CreateDirectory(dirPath.Replace(driveDirectory, filePath));
-            }
-            foreach (string newPath in Directory.GetFiles(
-                driveDirectory, "*", SearchOption.AllDirectories))
-            {
-                File.Copy(newPath, newPath.Replace(driveDirectory, filePath));
+                Console.WriteLine("Error: Could not find Cd " + CdNumber);
+                logFile.WriteLine(DateTime.Now);
+                logFile.WriteLine("Error: Could not find Cd " + CdNumber);
+                logFile.WriteLine();
             }
 
-
-            Console.WriteLine("Finished copying CD " + CdNumber);
+            
         }
     }
 }
