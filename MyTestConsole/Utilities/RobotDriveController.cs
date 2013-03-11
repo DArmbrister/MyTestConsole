@@ -42,29 +42,53 @@ namespace MyTestConsole.Utilities
                 proc.Close();
             }
         }
-
-        public string GetDriveStatus()
+        public bool CheckDriveIsValid(string driveName)
         {
+            string drvName = driveName.Substring(Math.Max(0, driveName.Length - 2));
             DriveInfo[] collectionOfDrives = DriveInfo.GetDrives();
             foreach (DriveInfo drive in collectionOfDrives)
             {
-                if (drive.DriveType == DriveType.CDRom)
+                if (drive.Name == drvName)
                 {
-                    if (drive.IsReady == true)
+                    if (drive.DriveType == DriveType.CDRom)
                     {
-                        return drive.RootDirectory.ToString();
+                        return true;
                     }
                 }
             }
-            return null;
+            return false;
         }
 
-        public void CopyCdContent(string baseFilePath, string CdNumber,StreamWriter logFile)
+        public bool GetDriveStatus(string driveName)
+        {
+            string drvName = driveName.Substring(Math.Max(0, driveName.Length - 2));
+            DriveInfo[] collectionOfDrives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in collectionOfDrives)
+            {
+                if (drive.Name == drvName)
+                {
+                    if (drive.DriveType == DriveType.CDRom)
+                    {
+                        if (drive.IsReady == true)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public void CopyCdContent(string baseFilePath, string CdNumber,StreamWriter logFile,string driveName)
         {
             string originalFilePath = null;
-            var filePath = Path.Combine(baseFilePath, CdNumber+"\\");
+            var filePath = Path.Combine(baseFilePath, CdNumber + "\\");
             var yay = System.IO.DriveInfo.GetDrives();
-            var driveDirectory = GetDriveStatus();
+            string driveDirectory = null;
+            if (GetDriveStatus(driveName) == true)
+            {
+                driveDirectory = driveName;
+            }
             if (driveDirectory != null)
             {
                 if (!Directory.Exists(filePath))
